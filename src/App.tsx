@@ -9,12 +9,12 @@ import Home from "./pages/Home";
 export default function App() {
   return (
     <Router>
-      <body>
-      <MyHeader />
+      <body style={{ backgroundColor: "#d8d5c7" }}>
+        <MyHeader />
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>
-      <MyFooter />
+        <MyFooter />
       </body>
     </Router>
   );
