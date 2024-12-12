@@ -5,6 +5,7 @@ import MyFooter from "./components/MyFooter";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Home from "./pages/Home";
+import Volunteers from "./pages/Volunteers";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <MyHeader />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/volunteers" element={<Volunteers />} />
         </Routes>
         <MyFooter />
       </body>
