@@ -1,9 +1,11 @@
 import ajudar from "../assets/Volunteering-pana.png";
 import ajuda from "../assets/Medical care-rafiki.png";
+import "../styles/Home.css";
 
 export default function Home() {
   return (
-    <div style={{ height: "100%" }}>
+    <div className="home">
+      <hr style={{ border: "1px solid #333", margin: "1px 0" }} />
       <h1>
         Seja bem-vindo ao <strong>Voluteer</strong> - <strong>D</strong>oing
         <strong>B</strong>etter
@@ -27,7 +29,7 @@ export default function Home() {
               Se você precisa de ajuda, você pode se cadastrar e solicitar
               ajuda.
             </p>
-            <button type="button" className="btn btn-outline-dark">
+            <button type="button" className="btn btn-outline-dark laranja">
               Clique aqui para solicitar ajuda
             </button>
           </div>
@@ -41,7 +43,7 @@ export default function Home() {
               Se você é um voluntário, você pode se cadastrar e oferecer seus
               serviços.{" "}
             </p>
-            <button type="button" className="btn btn-outline-dark">
+            <button type="button" className="btn btn-outline-dark azul">
               Clique aqui para ajudar
             </button>
           </div>
@@ -54,6 +56,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <hr style={{ border: "1px solid #333", margin: "1px 0" }} />
     </div>
   );
 }
