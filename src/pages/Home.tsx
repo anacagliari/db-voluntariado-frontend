@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import ajudar from "../assets/Volunteering-pana.png";
 import ajuda from "../assets/Medical care-rafiki.png";
 import "../styles/Home.css";
@@ -43,9 +44,11 @@ export default function Home() {
               Se você é um voluntário, você pode se cadastrar e oferecer seus
               serviços.{" "}
             </p>
-            <button type="button" className="btn btn-outline-dark azul">
-              Clique aqui para ajudar
-            </button>
+            <Link to="/volunteers">
+              <button type="button" className="btn btn-outline-dark azul" >
+                Clique aqui para ajudar
+              </button>
+            </Link>
           </div>
           <div className="col">
             <img
