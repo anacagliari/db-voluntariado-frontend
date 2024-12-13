@@ -30,9 +30,11 @@ export default function Home() {
               Se você precisa de ajuda, você pode se cadastrar e solicitar
               ajuda.
             </p>
-            <button type="button" className="btn btn-outline-dark laranja">
-              Clique aqui para solicitar ajuda
-            </button>
+            <Link to="/beneficiary">
+              <button type="button" className="btn btn-outline-dark laranja">
+                Clique aqui para solicitar ajuda
+              </button>
+            </Link>
           </div>
         </div>
       </section>
