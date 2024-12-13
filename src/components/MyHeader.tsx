@@ -17,7 +17,7 @@ export default function MyHeader() {
             <Link to="/volunteers">Voluntários</Link>
           </li>
           <li>
-            <Link to="/beneficiary">Beneficiários</Link>
+            <Link to="/beneficiaries">Beneficiários</Link>
           </li>
         </ul>
       </nav>

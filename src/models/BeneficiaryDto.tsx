@@ -10,5 +10,5 @@ export class BeneficiaryDto {
   city: string = '';
   dateFrom: string = '';
   dateTo: string = '';
-  areasDeSuporte: string[] = [];
+  supportArea: string[] = [];
 }

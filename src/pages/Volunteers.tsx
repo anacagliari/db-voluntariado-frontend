@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import VolunteersRegistration from "./VolunteersRegistration";
 import { useState } from 'react';
 
@@ -35,9 +36,11 @@ export default function Volunteers() {
               <p>
                   Se você é um voluntário, você pode conectar-se a pessoas que precisam de ajuda. 
               </p>
+              <Link to="/support-portal">
               <button type="button" className="btn btn-outline-dark azul">
                   Conectar-se 
               </button>
+              </Link>
             </div>
           </div>
         </section>
