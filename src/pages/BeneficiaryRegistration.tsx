@@ -83,7 +83,7 @@ export default function BeneficiaryRegistration({ showModalAddBeneficiary, close
 
             <div className="col">
               <label>Áreas de Suporte: </label>
-              <select className={`${styles.input}`} value={beneficiaryDto.areasDeSuporte} onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, areasDeSuporte: [e.target.value] })}>
+              <select className={`${styles.input}`} value={beneficiaryDto.supportArea} onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, supportArea: [e.target.value] })}>
                 <option value="" disabled> Selecione sua área de suporte </option>
                 <option value="Aprendizado de Tecnologia">Aprendizado de Tecnologia</option>
                 <option value="Realização de Tarefas Cotidianas">Realização de Tarefas Cotidianas</option>

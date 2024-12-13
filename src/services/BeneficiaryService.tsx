@@ -7,7 +7,12 @@ const api = axios.create({
 });
 
 
-export const createBeneficiary = async (beneciciaryData: BeneficiaryDto) => {
-  const response = await api.post('/beneficiary', beneciciaryData);
+export const createBeneficiary = async (beneficiaryData: BeneficiaryDto) => {
+  const response = await api.post('/beneficiaries', beneficiaryData);
+  return response.data;
+};
+
+export const getBeneficiary = async () => {
+  const response = await api.get('/beneficiaries');
   return response.data;
 };

@@ -8,5 +8,5 @@ export class VolunteerDto {
   cep: string = '';
   address: string = '';
   city: string = '';
-  areasDeSuporte: string[] = [];
+  supportArea: string[] = [];
 }

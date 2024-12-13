@@ -7,6 +7,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import Home from "./pages/Home";
 import Volunteers from "./pages/Volunteers";
 import Beneficiary from "./pages/Baneficiary";
+import SupportPortal  from "./pages/SupportPortal";
 
 export default function App() {
   return (
@@ -16,7 +17,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/volunteers" element={<Volunteers />} />
-          <Route path="/beneficiary" element={<Beneficiary />} />
+          <Route path="/beneficiaries" element={<Beneficiary />} />
+          <Route path="/support-portal" element={<SupportPortal />} />
         </Routes>
         <MyFooter />
       </body>
