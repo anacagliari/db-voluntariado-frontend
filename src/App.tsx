@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Home from "./pages/Home";
 import Volunteers from "./pages/Volunteers";
+import Beneficiary from "./pages/Baneficiary";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/volunteers" element={<Volunteers />} />
+          <Route path="/beneficiary" element={<Beneficiary />} />
         </Routes>
         <MyFooter />
       </body>
