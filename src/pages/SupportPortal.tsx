@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { BeneficiaryDto } from "../models/BeneficiaryDto";
-import styles from "../styles/SupportPortal.module.css";
+import "../styles/SupportPortal.css";
 import { getBeneficiary } from "../services/BeneficiaryService";
+import "../styles/Buttons.css";
 
 export default function SupportPortal() {
   const [requests, setRequests] = useState<BeneficiaryDto[]>([]); 
@@ -69,43 +70,46 @@ const filteredRequests = requests.filter((request) =>
 );
 
   return (
-    <>
-    <section className={styles.portal}>
+    <div className="portal">
       <h1>Portal de Solicitações</h1>
-      <p>Area de acesso exclusivo do voluntário.</p>
+      <p>Área de acesso exclusivo do voluntário.</p>
+    <section className="portal.requests">
       <h5>Veja abaixo as solicitações disponíveis.</h5>
       <input
         type="text"
         placeholder="Pesquisar por área de suporte"
-        className={styles.searchBox}
+        className="searchBox"
         value={requestSearch}
         onChange={(e) => setRequestSearch(e.target.value)}
       />
-      <div className={styles.requestsList}>
+      <div className="requestsList">
         {filteredRequests.length > 0 ? (
-            filteredRequests.map((request, index) => (
-              <div key={index} className={styles.requestCard}>
-                <h3>{request.supportArea.join(", ")}</h3>
+          filteredRequests.map((request, index) => (
+            <div key={index} className="requestCard">
+              <h3>{request.supportArea.join(", ")}</h3>
               <p>
-                <strong>Período de Suporte: </strong>{request.dateFrom} a {request.dateTo}
+                <strong>Período de Suporte: </strong>
+                {request.dateFrom} a {request.dateTo}
               </p>
               <p>
-                <strong>Beneficiário: </strong>{request.name}
+                <strong>Beneficiário: </strong>
+                {request.name}
               </p>
               <p>
-                <strong>Região: </strong>{request.city} - {request.address}
+                <strong>Região: </strong>
+                {request.city} - {request.address}
               </p>
               <button
-                className={styles.saberMaisBtn}
-                onClick={() => alert(`Detalhes sobre ${request.name}`)} 
+                className="saberMaisBtn"
+                onClick={() => alert(`Detalhes sobre ${request.name}`)}
               >
                 Saber mais detalhes.
               </button>
               <button
-                className={styles.saberMaisBtn}
-                onClick={() => alert(`Conecte-se ${request.name}`)} 
+                className="saberMaisBtn"
+                onClick={() => alert(`Conecte-se ${request.name}`)}
               >
-              Conectar
+                Conectar
               </button>
             </div>
           ))
@@ -114,42 +118,40 @@ const filteredRequests = requests.filter((request) =>
         )}
       </div>
     </section>
-    <section>
+    <section className="portal">
       <h5>Minhas conexões</h5>
       <input
-    type="text"
-    placeholder="Pesquisar beneficiário"
-    className={styles.searchBox}
-    value={connectionSearch}
-    onChange={(e) => setConnectionSearch(e.target.value)}
-  />
-  <table className={styles.connectionsTable}>
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Período</th>
-      </tr>
-    </thead>
-    <tbody>
-  {filteredConnections.length > 0 ? (
-    filteredConnections.map((connection) => (
-      <tr key={connection.cpf}>
-        <td>{connection.name}</td>
-        <td>
-          {connection.dateFrom} a {connection.dateTo}
-        </td>
-      </tr>
-    ))
-  ) : (
-    <tr>
-      <td colSpan={2} style={{ textAlign: "center" }}>
-        Não há conexões correspondentes à busca.
-      </td>
-    </tr>
-  )}
-</tbody>
-  </table>
+        type="text"
+        placeholder="Pesquisar beneficiário"
+        className="searchBox"
+        value={connectionSearch}
+        onChange={(e) => setConnectionSearch(e.target.value)}
+      />
+      <table className="connectionsTable">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Período</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredConnections.length > 0 ? (
+            filteredConnections.map((connection) => (
+              <tr key={connection.cpf}>
+                <td>{connection.name}</td>
+                <td>{connection.dateFrom} a {connection.dateTo}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={2} className="noConnections">
+                Não há conexões correspondentes à busca.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </section>
-    </>
-  );
-}
+  </div>
+    );
+  }
