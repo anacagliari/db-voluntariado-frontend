@@ -10,6 +10,9 @@ export default function MyHeader() {
       </Link>
       <nav className={styles.navContainer}>
         <ul>
+        <li>
+            <Link to="/">Início</Link>
+          </li>
           <li>
             <Link to="/about">Sobre</Link>
           </li>
@@ -21,7 +24,7 @@ export default function MyHeader() {
           </li>
         </ul>
       </nav>
-      <button className="btn">Entrar</button>
+      <button className="btn btn-primary">Entrar</button>
     </header>
   );
 }

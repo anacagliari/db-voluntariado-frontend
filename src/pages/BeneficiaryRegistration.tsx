@@ -1,8 +1,9 @@
 import { useState } from "react";
-import styles from "../styles/VolunteesRegistration.module.css";
+import styles from "../styles/Registration.module.css";
 import { BeneficiaryRegistrationProps } from "../props/BeneficiaryRegistrationProps";
 import { createBeneficiary } from "../services/BeneficiaryService";
 import { BeneficiaryDto } from "../models/BeneficiaryDto";
+import "../styles/Buttons.css";
 
 
 export default function BeneficiaryRegistration({ showModalAddBeneficiary, closeModal }: BeneficiaryRegistrationProps): JSX.Element | null {
@@ -22,101 +23,201 @@ export default function BeneficiaryRegistration({ showModalAddBeneficiary, close
     }
   }
 
-  return (
-    <div className={styles.modalBackground}>
-      
-      <div className="card">
-
+  return   (
+    <div
+      className={`${styles.modalBackground} d-flex justify-content-center align-items-center`}
+    >
+      <div className={`${styles.modalCard} card p-4 shadow-lg rounded`}>
         <div className="card-body">
-          <h3 className="card-title">Cadastro</h3>
-          <div>
-
-            <div className="col">
-              <label>Nome: </label>
-              <input type="text" placeholder="Ex: João" className={`${styles.input}`} value={beneficiaryDto.name} onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, name: e.target.value })}/>
-            </div>
-            
-            <div className="col">
-              <label>Sexo: </label>
-              <select className={`${styles.input}`} value={beneficiaryDto.gender} onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, gender: e.target.value })}>
-                  <option value="" disabled> Selecione seu gênero </option>
-                  <option value="feminino">Feminino</option>
-                  <option value="masculino">Masculino</option>
-                  <option value="prefiro-nao-informar">Prefiro não informar</option>
-                </select>
-            </div>
-
-            <div className="col">
-              <label>Idade: </label>
-              <input type="number" placeholder="Ex: 18" className={`${styles.input}`} value={beneficiaryDto.age} onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, age: Number(e.target.value) })}/>
+          <div className={styles.cardTitleBeneficiary}>
+          <h3>Cadastro de Beneficiário</h3>
+          </div>
+          <div className="row g-3">
+            <div className="col-12">
+              <label>Nome:</label>
+              <input
+                type="text"
+                placeholder="Ex: João"
+                className={`${styles.input} form-control`}
+                value={beneficiaryDto.name}
+                onChange={(e) =>
+                  setBeneficiaryDto({ ...beneficiaryDto, name: e.target.value })
+                }
+              />
             </div>
 
-            <div className="col">
-              <label>CPF: </label>
-              <input type="number" placeholder="Ex: 000.000.000-00" className={`${styles.input}`} value={beneficiaryDto.cpf} onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, cpf: e.target.value })}/>
+            <div className="col-md-4">
+              <label>Idade:</label>
+              <input
+                type="number"
+                placeholder="Ex: 18"
+                className={`${styles.input} form-control`}
+                value={beneficiaryDto.age}
+                onChange={(e) =>
+                  setBeneficiaryDto({
+                    ...beneficiaryDto,
+                    age: Number(e.target.value),
+                  })
+                }
+              />
+            </div>
+            <div className="col-md-4">
+              <label>CPF:</label>
+              <input
+                type="text"
+                placeholder="Ex: 000.000.000-00"
+                className={`${styles.input} form-control`}
+                value={beneficiaryDto.cpf}
+                onChange={(e) =>
+                  setBeneficiaryDto({ ...beneficiaryDto, cpf: e.target.value })
+                }
+              />
+            </div>
+            <div className="col-md-4">
+              <label>Telefone:</label>
+              <input
+                type="text"
+                placeholder="Ex: (00) 00000-0000"
+                className={`${styles.input} form-control`}
+                value={beneficiaryDto.phone}
+                onChange={(e) =>
+                  setBeneficiaryDto({ ...beneficiaryDto, phone: e.target.value })
+                }
+              />
             </div>
 
-            <div className="col">
-              <label>Telefone: </label>
-              <input type="number" placeholder="Ex: (00) 00000-0000" className={`${styles.input}`} value={beneficiaryDto.phone} onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, phone: e.target.value })}/>
-            </div>
-
-            <div className="col">
-              <label>E-mail: </label>
-              <input type="email" placeholder="Ex: email@email.com" className={`${styles.input}`} value={beneficiaryDto.email} onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, email: e.target.value })}/>
-            </div>
-
-            <div className="col">
-              <label>CEP: </label>
-              <input type="number" placeholder="Ex: 00000-000" className={`${styles.input}`} value={beneficiaryDto.cep} onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, cep: e.target.value })}/>
-            </div>
-
-            <div className="col">
-              <label>Cidade: </label>
-              <input type="text" placeholder="Ex: São Paulo" className={`${styles.input}`} value={beneficiaryDto.city} onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, city: e.target.value })}/>
-            </div>
-
-            <div className="col">
-              <label>Endereço: </label>
-              <input type="text" placeholder="Ex: Rua, nº" className={`${styles.input}`} value={beneficiaryDto.address} onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, address: e.target.value })}/>
-            </div>
-
-            <div className="col">
-              <label>Áreas de Suporte: </label>
-              <select className={`${styles.input}`} value={beneficiaryDto.supportArea} onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, supportArea: [e.target.value] })}>
-                <option value="" disabled> Selecione sua área de suporte </option>
-                <option value="Aprendizado de Tecnologia">Aprendizado de Tecnologia</option>
-                <option value="Realização de Tarefas Cotidianas">Realização de Tarefas Cotidianas</option>
-                <option value="Participação em Atividades Recreativas">Participação em Atividades Recreativas</option>
+            <div className="col-12">
+              <label>Sexo:</label>
+              <select
+                className={`${styles.input} form-control`}
+                value={beneficiaryDto.gender}
+                onChange={(e) =>
+                  setBeneficiaryDto({ ...beneficiaryDto, gender: e.target.value })
+                }
+              >
+                <option value="" disabled>
+                  Selecione seu sexo
+                </option>
+                <option value="feminino">Feminino</option>
+                <option value="masculino">Masculino</option>
+                <option value="prefiro-nao-informar">Prefiro não informar</option>
               </select>
             </div>
-            <div className="col">
-              <label>Período da Solicitação: </label>
-              <div className={`${styles.inputGroup}`}>
+
+            <div className="col-12">
+              <label>CEP:</label>
+              <input
+                type="text"
+                placeholder="Ex: 00000-000"
+                className={`${styles.input} form-control`}
+                value={beneficiaryDto.cep}
+                onChange={(e) =>
+                  setBeneficiaryDto({ ...beneficiaryDto, cep: e.target.value })
+                }
+              />
+            </div>
+
+            <div className="col-12">
+              <label>Cidade:</label>
+              <input
+                type="text"
+                placeholder="Ex: São Paulo"
+                className={`${styles.input} form-control`}
+                value={beneficiaryDto.city}
+                onChange={(e) =>
+                  setBeneficiaryDto({ ...beneficiaryDto, city: e.target.value })
+                }
+              />
+            </div>
+
+            <div className="col-12">
+              <label>Endereço:</label>
+              <input
+                type="text"
+                placeholder="Ex: Rua, nº"
+                className={`${styles.input} form-control`}
+                value={beneficiaryDto.address}
+                onChange={(e) =>
+                  setBeneficiaryDto({
+                    ...beneficiaryDto,
+                    address: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+            <div className="col-12">
+              <label>Período da Solicitação:</label>
+              <div className="d-flex gap-2">
                 <input
                   type="date"
-                  placeholder="Data de início"
-                  className={`${styles.input}`}
+                  className={`${styles.input} form-control`}
                   value={beneficiaryDto.dateFrom}
-                  onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, dateFrom: e.target.value })}
+                  onChange={(e) =>
+                    setBeneficiaryDto({
+                      ...beneficiaryDto,
+                      dateFrom: e.target.value,
+                    })
+                  }
                 />
                 <input
                   type="date"
-                  placeholder="Data de fim"
-                  className={`${styles.input} ms-2`}
+                  className={`${styles.input} form-control`}
                   value={beneficiaryDto.dateTo}
-                  onChange={(e) => setBeneficiaryDto({ ...beneficiaryDto, dateTo: e.target.value })}
+                  onChange={(e) =>
+                    setBeneficiaryDto({
+                      ...beneficiaryDto,
+                      dateTo: e.target.value,
+                    })
+                  }
                 />
               </div>
             </div>
-            <div className="col">
-              <button title="Cadastrar" type="button" className="btn btn-outline-dark laranja" onClick={addBeneficiary}>
+
+            <div className="col-12">
+              <label>Áreas de Suporte:</label>
+              <select
+                className={`${styles.input} form-control`}
+                value={beneficiaryDto.supportArea}
+                onChange={(e) =>
+                  setBeneficiaryDto({
+                    ...beneficiaryDto,
+                    supportArea: [e.target.value],
+                  })
+                }
+              >
+                <option value="" disabled>
+                  Selecione sua área de suporte
+                </option>
+                <option value="Aprendizado de Tecnologia">
+                  Aprendizado de Tecnologia
+                </option>
+                <option value="Realização de Tarefas Cotidianas">
+                  Realização de Tarefas Cotidianas
+                </option>
+                <option value="Participação em Atividades Recreativas">
+                  Participação em Atividades Recreativas
+                </option>
+              </select>
+            </div>
+
+
+            <div className="col-12 text-center mt-3">
+              <button
+                type="button"
+                className="btn btn-primary me-2"
+                onClick={addBeneficiary}
+              >
                 Cadastrar
               </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => closeModal()}
+              >
+                Cancelar
+              </button>
             </div>
-            <button title="Cancelar" type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => closeModal()}>
-              Cancelar
-            </button>
           </div>
         </div>
       </div>

@@ -1,5 +1,4 @@
-
-.home {
+.user {
   background-color: var(--color-background);
   display: flex;
   flex-direction: column;
@@ -10,16 +9,17 @@
   padding: 0;
 }
 
-.home h1 {
-  color: var(--color-secondary);
+.user h1 {
+  color: var(--color-text);
   margin-top: 100px;
   text-align: center;
 }
 
-.home strong {
+.user strong {
   color: var(--color-primary);
 }
-.home p {
+
+.user p {
   color: var(--text-color);
   text-align: center;
 }
@@ -35,25 +35,30 @@
   margin: 10px 20px 10px 20px;
 }
 
-
 .col {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
+  width: 50%; 
+
 }
 
 .col img {
   width: 70%;
   height: auto;
+  margin-bottom: 20px; 
 }
 
 .col-info {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  justify-content: center; 
+  align-items: center; 
+  text-align: center; 
+  width: 100%; 
+  height: 100%;  
+
 }
 
 .col h2 {
@@ -63,5 +68,5 @@
 .col p {
   color: var(--text-color);
   margin-bottom: 15px;
+  padding: 20px;
 }
-

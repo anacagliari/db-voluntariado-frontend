@@ -1,6 +1,13 @@
 import { Link } from "react-router";
 import VolunteersRegistration from "./VolunteersRegistration";
 import { useState } from 'react';
+import "../styles/Buttons.css";
+
+import ajudar from "../assets/Social biography-pana.png"; 
+import ajuda from "../assets/Active elderly people-cuate (1).png"; 
+
+
+
 
 export default function Volunteers() {
 
@@ -11,11 +18,14 @@ export default function Volunteers() {
 
 
   return (
-    <div>
-      <div className="volunteer">
-        <hr style={{ border: "1px solid #333", margin: "1px 0" }} />
-        <h1>Olá Voluntário!</h1>
-        <section className="container">
+  <div className="user">
+      <h1>Olá Voluntário!</h1>
+      <p>
+        Se você deseja se tornar um voluntário ou já é um, você pode se cadastrar e oferecer seus serviços.
+      </p>
+
+      <section className="container">
+        <div className="conteiner-volunteer">
           <div className="row">
             <div className="col">
               <h2>Torne-se um voluntário</h2>
@@ -23,32 +33,46 @@ export default function Volunteers() {
                 Se você deseja se tornar um voluntário, você pode se cadastrar e
                 oferecer seus serviços.
               </p>
-              <button type="button" className="btn btn-outline-dark laranja" onClick={() => {openModalAddVolunteer()}}>
-                Casdatre-se
+              <button type="button" className="btn btn-secondary" onClick={openModalAddVolunteer}>
+                Cadastre-se
               </button>
             </div>
-          </div>
-        </section>
-        <section className="container">
-          <div className="row">
             <div className="col">
-              <h2>É nosso voluntário?</h2>
+              <img
+                src={ajudar}
+                className="col-md-6"
+                alt="Imagem de uma pessoa ajudando"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="container">
+        <div className="conteiner-volunteer">
+          <div className="row">
+          <div className="col">
+              <img
+                src={ajuda}
+                className="col-md-6"
+                alt="Imagem de uma pessoa ajudando"
+              />
+            </div>
+            <div className="col">
+              <h2>Já é voluntário?</h2>
               <p>
-                  Se você é um voluntário, você pode conectar-se a pessoas que precisam de ajuda. 
+                Se você já é voluntário, você pode conectar-se a pessoas que precisam de ajuda.
               </p>
               <Link to="/support-portal">
-              <button type="button" className="btn btn-outline-dark azul">
-                  Conectar-se 
-              </button>
+                <button type="button" className="btn btn-secondary">
+                  Conectar-se
+                </button>
               </Link>
             </div>
           </div>
-        </section>
-        <hr style={{ border: "1px solid #333", margin: "1px 0" }} />
-      </div>
+        </div>
+      </section>
 
       <VolunteersRegistration showModalAddVolunteer={showModalAddVolunteer} closeModal={closeModalAddVolunteer} />
-      
     </div>
   );
 }

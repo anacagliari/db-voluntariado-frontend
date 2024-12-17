@@ -1,5 +1,17 @@
-#root {
-  max-width: 1280px;
+#app {
+  max-width: 1200px;
   margin: 0 auto;
-  text-align: center;
+}
+
+.conteiner-volunteer{
+  background-color: var(--color-background-secondary);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+.conteiner-beneficiary{
+  background-color: var(--color-background-primary);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
