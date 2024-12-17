@@ -1,4 +1,5 @@
 export class BeneficiaryDto {
+  id: number = 0
   name: string = '';
   gender: string = '';
   age: number = 0;
@@ -10,5 +11,5 @@ export class BeneficiaryDto {
   city: string = '';
   dateFrom: string = '';
   dateTo: string = '';
-  supportArea: string[] = [];
+  supportArea: string = '';
 }
