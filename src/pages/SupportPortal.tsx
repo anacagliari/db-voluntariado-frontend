@@ -2,48 +2,16 @@ import { useEffect, useState } from "react";
 import { BeneficiaryDto } from "../models/BeneficiaryDto";
 import styles from "../styles/SupportPortal.module.css";
 import { getBeneficiary } from "../services/BeneficiaryService";
+import { SupportDto } from "../models/SupportDto";
+import { getSupport } from "../services/SupportService";
 
 export default function SupportPortal() {
   const [requests, setRequests] = useState<BeneficiaryDto[]>([]); 
-  const [connections, setConnections] = useState<BeneficiaryDto[]>([]);
+  const [connections, setConnections] = useState<SupportDto[]>([]);
   const [requestSearch, setRequestSearch] = useState(""); 
   const [connectionSearch, setConnectionSearch] = useState("");
 
-  const mockConnections: BeneficiaryDto[] = [
-    {
-      name: "Carlos Alberto",
-      gender: "masculino",
-      age: 40,
-      cpf: "45678912300",
-      phone: "(31) 98765-6789",
-      email: "carlos@email.com",
-      cep: "54321-000",
-      address: "Avenida C, 789",
-      city: "Belo Horizonte",
-      dateFrom: "2024-03-01",
-      dateTo: "2024-03-15",
-      supportArea: ["Assistência Jurídica"],
-    },
-    {
-      name: "Ana Clara",
-      gender: "feminino",
-      age: 28,
-      cpf: "12378945600",
-      phone: "(41) 91234-5678",
-      email: "ana@email.com",
-      cep: "65432-100",
-      address: "Rua D, 321",
-      city: "Curitiba",
-      dateFrom: "2024-04-01",
-      dateTo: "2024-04-20",
-      supportArea: ["Suporte Psicológico"],
-    },
-  ];
-
   useEffect(() => {
-
-    setConnections(mockConnections);
-
 
     const fetchBeneficiaries = async () => {
       try {
@@ -55,11 +23,21 @@ export default function SupportPortal() {
       }
     };
     fetchBeneficiaries();
-  }, []);
+  const fetchSupports = async () => {
+    try {
+      const supports = await getSupport();
+      setConnections(supports); 
+      console.log("Suportes carregados:", supports);
+    } catch (error) {
+      console.error("Erro ao carregar suportes:", error);
+    }
+  };
+  fetchSupports();
+}, []);
 
 
 const filteredConnections = connections.filter((connection) =>
-  connection.name.toLowerCase().includes(connectionSearch.toLowerCase())
+  connection.beneficiary.name.toLowerCase().includes(connectionSearch.toLowerCase())
 );
 
 const filteredRequests = requests.filter((request) =>
@@ -132,9 +110,9 @@ const filteredRequests = requests.filter((request) =>
     </thead>
     <tbody>
   {filteredConnections.length > 0 ? (
-    filteredConnections.map((connection) => (
-      <tr key={connection.cpf}>
-        <td>{connection.name}</td>
+    filteredConnections.map((connection, index) => (
+      <tr key={index}>
+        <td>{connection.beneficiary.name}</td>
         <td>
           {connection.dateFrom} a {connection.dateTo}
         </td>

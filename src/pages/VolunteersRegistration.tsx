@@ -81,16 +81,6 @@ export default function VolunteersRegistration({ showModalAddVolunteer, closeMod
             </div>
 
             <div className="col">
-              <label>Áreas de Suporte: </label>
-              <select className={`${styles.input}`} value={volunteerDTO.supportArea} onChange={(e) => setVolunteerDTO({ ...volunteerDTO, supportArea: [e.target.value] })}>
-                <option value="" disabled> Selecione sua área de suporte </option>
-                <option value="Aprendizado de Tecnologia">Aprendizado de Tecnologia</option>
-                <option value="Realização de Tarefas Cotidianas">Realização de Tarefas Cotidianas</option>
-                <option value="Participação em Atividades Recreativas">Participação em Atividades Recreativas</option>
-              </select>
-            </div>
-
-            <div className="col">
               <button title="Cadastrar" type="button" className="btn btn-outline-dark laranja" onClick={addVolunteer}>
                 Cadastrar
               </button>
