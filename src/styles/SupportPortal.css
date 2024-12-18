@@ -12,9 +12,14 @@
 }
 
 h1 {
-  color: var(--color-primary);
+  color: var(--color-secondary);
   text-align: center;
   margin-bottom: 20px;
+}
+
+h3 {
+  color: var(--color-primary);
+  margin-top: 20px;
 }
 
 h5 {
@@ -28,55 +33,60 @@ h5 {
   border: 1px solid var(--color-secondary);
   border-radius: 5px;
   font-size: 16px;
+  margin-bottom: 10px;
 }
 
 .requestsList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  justify-content: center;
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 10px; 
+  justify-content: center; 
 }
 
 .requestCard {
-  background-color: var(--color-background-secondary);
-  border: 1px solid var(--color-secondary);
+  flex: 1 1 calc(25% - 20px); 
+  max-width: 600px; 
+  background-color: var(--color-background-primary);
+  border: 1px solid var(--color-primary);
   border-radius: 8px;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
-  margin: 0 auto;
+  margin: 10px; 
 }
 
 .requestCard:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
 }
 
 .requestCard h3 {
-  color: var(--color-primary);
+  color: var(--color-secondary);
   margin-bottom: 10px;
+  font-size: 20px;
 }
 
 .requestCard p {
   margin: 5px 0;
   color: var(--text-color);
+  font-size: 12px;
 }
 
 strong {
   font-weight: bold;
 }
 
-.saberMaisBtn {
+.supportBtn {
   background-color: var(--color-primary);
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 10px 15px;
-  margin-top: 10px;
-  font-size: 14px;
+  padding: 5px 10px;
+  margin: 10px;
+  font-size: 12px;
   transition: background-color 0.3s;
 }
 
-.saberMaisBtn:hover {
+.supportBtn:hover {
   background-color: var(--color-secondary);
 }
 

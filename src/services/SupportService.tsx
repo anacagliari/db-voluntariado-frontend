@@ -1,6 +1,7 @@
 import axios from "axios";
 import { SupportDto } from "../models/SupportDto";
-import { SupportResponseDto } from "../models/SupportResponseDto";
+import { SupportResponseDto } from "../models/SupportResponse.Dto";
+
 
 
 

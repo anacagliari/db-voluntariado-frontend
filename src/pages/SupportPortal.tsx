@@ -3,36 +3,56 @@ import { BeneficiaryDto } from "../models/BeneficiaryDto";
 import "../styles/SupportPortal.css";
 import { getBeneficiary } from "../services/BeneficiaryService";
 import "../styles/Buttons.css";
-import { BeneficiaryResponseDto } from "../models/BeneficiaryResponseDto";
 import axios from 'axios';
+import { getSupport } from "../services/SupportService";
+import { BeneficiaryResponseDto } from "../models/BeneficiaryResponseDto";
 
-// interface Connection {
-//   volunteer: {
-//     id: number;
-//   };
-//   beneficiary: {
-//     id: number;
-//   };
-//   dateFrom: string;
-//   dateTo: string;
-//   supportArea: string;
-// }
+interface Connection {
+  id: number;
+  volunteer: {
+    id: number;
+  };
+  beneficiary: {
+    id: number;
+    name: string;
+  };
+  dateFrom: string;
+  dateTo: string;
+  supportArea: string;
+}
 
 export default function SupportPortal() {
   const [requests, setRequests] = useState<BeneficiaryDto[]>([]); 
   const [beneficiaryResponses, setBeneficiaryResponses] = useState<BeneficiaryResponseDto[]>([]); 
   const [requestSearch, setRequestSearch] = useState(""); 
-  //const [connections, setConnections] = useState<Connection[]>([]); 
-  //const [connectionSearch, setConnectionSearch] = useState("");
+  const [connections, setConnections] = useState<Connection[]>([]); 
+  const [connectionSearch, setConnectionSearch] = useState("");
+  const [volunteerName, setVolunteerName] = useState<string | null>(null);
+
+  // ID fixo do voluntário, simulando que o Voluntário está logado
+  const volunteerId = 1; 
 
   useEffect(() => {
+
+    // Buscar o nome do voluntário
+    const fetchVolunteerName = async () => {
+      try {
+        const response = await axios.get<{ name: string }>(`http://localhost:8080/volunteers/${volunteerId}`);
+        setVolunteerName(response.data.name);
+      } catch (error) {
+        console.error("Erro ao buscar o nome do voluntário:", error);
+        setVolunteerName("Desconhecido");
+      }
+    };
+
+    fetchVolunteerName();
+
     const fetchBeneficiaries = async () => {
       try {
         //obter lista de solicitações dos beneficiários
         const beneficiaries = await getBeneficiary();
         setRequests(beneficiaries);
 
-        // Para cada BeneficiaryDto, buscar informações detalhadas
         const responses = await Promise.all(
           beneficiaries.map(async (beneficiary: BeneficiaryDto) => {
             const response = await axios.get<BeneficiaryResponseDto>(`http://localhost:8080/beneficiaries/${beneficiary.id}`,{
@@ -49,37 +69,35 @@ export default function SupportPortal() {
       }
     };
     fetchBeneficiaries();
+
+    // obter lista de conexões
+  const fetchConnections = async () => {
+      try {
+        const supportsConnections = await getSupport();
+        setConnections(supportsConnections); 
+        console.log("Conexões carregadas:", supportsConnections);
+      } catch (error) {
+        console.error("Erro ao carregar as conexões:", error);
+      }
+    };
+    fetchConnections();
   }, []);
   
-  // obter lista de conexões
-  // const fetchConnections = async () => {
-  //     try {
-  //       const supportsConnections = await getSupport();
-  //       setConnections(supportsConnections); 
-  //       console.log("Conexões carregadas:", supportsConnections);
-  //     } catch (error) {
-  //       console.error("Erro ao carregar as conexões:", error);
-  //     }
-  //   };
-  //   fetchConnections();
-  // }, []);
 
   // Filtra solicitações por área de suporte
   const filteredRequests = requests.filter((request) =>
     request.supportArea.toLowerCase().includes(requestSearch.toLowerCase())
   );
 
-  // Filtra as conexões do voluntário
-  // const filteredConnections = connections.filter((connection) =>
-  //   connection.beneficiary.name.toLowerCase().includes(connectionSearch.toLowerCase())
-  // );
+  //Filtra as conexões do voluntário
+  const filteredConnections = connections.filter((connection) =>
+    connection.beneficiary.name.toLowerCase().includes(connectionSearch.toLowerCase())
+  );
 
   const handleConnect = async (beneficiary: BeneficiaryResponseDto) => {
     try {
       console.log("Conectando com o beneficiário:", beneficiary);
 
-      // ID fixo do voluntário, simulando que o Voluntário está logado
-      const volunteerId = 5; 
 
       // Criando o objeto de suporte com os dados necessários
       const supportData = {
@@ -106,9 +124,30 @@ export default function SupportPortal() {
     }
   };
 
+
+  const handleDeleteConnection = async (connection: Connection) => {
+    if (window.confirm(`Tem certeza que deseja excluir a conexão com ${connection.beneficiary.name}?`)) {
+      try {
+        // Enviar requisição DELETE para o backend
+        await axios.delete(`http://localhost:8080/volunteers/support/${connection.id}`);
+        
+        // Remover a conexão da lista local após exclusão bem-sucedida
+        setConnections((prevConnections) =>
+          prevConnections.filter((c) => c !== connection)
+        );
+  
+        alert(`Conexão com ${connection.beneficiary.name} excluída com sucesso.`);
+      } catch (error) {
+        console.error("Erro ao excluir conexão:", error);
+        alert("Não foi possível excluir a conexão. Tente novamente.");
+      }
+    }
+  };
+
   return (
     <div className="portal">
       <h1>Portal de Solicitações</h1>
+      <h3>Bem-vindo, <strong>{volunteerName || "Carregando..."}</strong>!</h3>
       <p>Área de acesso exclusivo do voluntário.</p>
       <section className="portal.requests">
         <h5>Veja abaixo as solicitações disponíveis.</h5>
@@ -127,27 +166,31 @@ export default function SupportPortal() {
               );
               return (
                 <div key={index} className="requestCard">
-                  <h3>{request.supportArea}</h3>
-                  <p>
-                    <strong>Período de Suporte: </strong>
-                    {request.dateFrom} a {request.dateTo}
-                  </p>
+                  <h3>Nova Solicitação</h3>
                   <p>
                     <strong>Beneficiário: </strong>
                     {request.name}
+                  </p>
+                  <p>
+                  <strong>Área de suporte: </strong>
+                    {request.supportArea}
+                  </p>
+                  <p>
+                    <strong>Período de Suporte: </strong>
+                    {request.dateFrom} a {request.dateTo}
                   </p>
                   <p>
                     <strong>Região: </strong>
                     {request.city} - {request.address}
                   </p>
                   <button
-                    className="saberMaisBtn"
+                    className="supportBtn"
                     onClick={() => alert(`Detalhes sobre ${request.name}`)}
                   >
                     Saber mais detalhes.
                   </button>
                   <button
-                    className="saberMaisBtn"
+                    className="supportBtn"
                     onClick={() => response && handleConnect(response)}
                   >
                     Conectar
@@ -160,7 +203,7 @@ export default function SupportPortal() {
           )}
         </div>
       </section>
-      {/* <section className="portal">
+      <section className="portal">
         <h5>Minhas conexões</h5>
         <input
           type="text"
@@ -172,8 +215,9 @@ export default function SupportPortal() {
         <table className="connectionsTable">
           <thead>
             <tr>
-              <th>Nome</th>
-              <th>Período</th>
+              <th>Nome do Beneficiário</th>
+              <th>Período do voluntariado</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -184,18 +228,26 @@ export default function SupportPortal() {
                   <td>
                     {connection.dateFrom} a {connection.dateTo}
                   </td>
+                  <td>
+                    <button
+                      className="supportBtn"
+                      onClick={() => handleDeleteConnection(connection)}
+                    >
+                      Excluir
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={2} className="noConnections">
+                <td colSpan={3} className="noConnections">
                   Não há conexões correspondentes à busca.
                 </td>
               </tr>
             )}
           </tbody>
         </table>
-      </section> */}
+      </section>
     </div>
   );
 }
