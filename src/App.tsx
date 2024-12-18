@@ -8,6 +8,9 @@ import Home from "./pages/Home";
 import Volunteers from "./pages/Volunteers";
 import Beneficiary from "./pages/Baneficiary";
 import SupportPortal  from "./pages/SupportPortal";
+import About from "./pages/About";
+import NotFound from "./pages/NotFound";
+import Building from "./pages/Building";
 
 export default function App() {
   return (
@@ -16,9 +19,12 @@ export default function App() {
         <MyHeader />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route path="/volunteers" element={<Volunteers />} />
           <Route path="/beneficiaries" element={<Beneficiary />} />
           <Route path="/support-portal" element={<SupportPortal />} />
+          <Route path="/building" element={<Building />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <MyFooter />
       </body>

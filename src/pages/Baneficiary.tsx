@@ -1,4 +1,5 @@
 import BeneficiaryRegistration from "./BeneficiaryRegistration";
+import { Link } from "react-router";
 import { useState } from 'react';
 import ajudar from "../assets/Next option-pana (1).png"; 
 import ajuda from "../assets/Volunteering-pana (1).png"; 
@@ -57,9 +58,11 @@ export default function Beneficiary() {
             <p>
               Se você é um beneficiário, você pode solicitar a sua ajuda e conectar-se a pessoas que podem te ajudar.
             </p>
-            <button type="button" className="btn btn-primary">
-              Solicitar
-            </button>
+            <Link to="/building">
+              <button type="button" className="btn btn-primary">
+                Solicitar
+              </button>
+            </Link>
           </div>
         </div>
       </div>
