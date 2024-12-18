@@ -10,8 +10,23 @@ const api = axios.create({
 
 
 export const createSupport = async (supportData: SupportDto) => {
-  const response = await api.post('/volunteers/support', supportData);
-  return response.data;
+  try {
+    const response = await axios.post('http://localhost:8080/volunteers/support', {
+      volunteer: {
+        id: supportData.volunteer.id
+      },
+      beneficiary: {
+        id: supportData.beneficiary.id
+      },
+      dateFrom: supportData.dateFrom,
+      dateTo: supportData.dateTo,
+      supportArea: supportData.supportArea
+    });
+
+    console.log('Suporte criado com sucesso:', response.data);
+  } catch (error) {
+    console.error('Erro ao criar suporte:', error);
+  }
 };
 
 export const getSupport = async (): Promise<SupportResponseDto[]> => {
