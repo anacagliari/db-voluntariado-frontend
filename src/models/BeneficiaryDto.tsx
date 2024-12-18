@@ -1,5 +1,5 @@
 export class BeneficiaryDto {
-  id: number = 0
+  id?: number; 
   name: string = '';
   gender: string = '';
   age: number = 0;

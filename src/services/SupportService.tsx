@@ -1,5 +1,6 @@
 import axios from "axios";
 import { SupportDto } from "../models/SupportDto";
+import { SupportResponseDto } from "../models/SupportResponseDto";
 
 
 
@@ -13,7 +14,7 @@ export const createSupport = async (supportData: SupportDto) => {
   return response.data;
 };
 
-export const getSupport = async () => {
+export const getSupport = async (): Promise<SupportResponseDto[]> => {
   const response = await api.get('/volunteers/support');
   return response.data;
 };
