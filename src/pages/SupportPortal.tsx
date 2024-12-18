@@ -28,11 +28,17 @@ export default function SupportPortal() {
   const [connections, setConnections] = useState<Connection[]>([]); 
   const [connectionSearch, setConnectionSearch] = useState("");
   const [volunteerName, setVolunteerName] = useState<string | null>(null);
+  const [volunteerPoints, setVolunteerPoints] = useState<number>(0);
 
   // ID fixo do voluntário, simulando que o Voluntário está logado
   const volunteerId = 1; 
 
   useEffect(() => {
+
+    const storedPoints = localStorage.getItem(`volunteerPoints-${volunteerId}`);
+    if (storedPoints) {
+      setVolunteerPoints(parseInt(storedPoints, 10));
+    }
 
     // Buscar o nome do voluntário
     const fetchVolunteerName = async () => {
@@ -94,7 +100,12 @@ export default function SupportPortal() {
     connection.beneficiary.name.toLowerCase().includes(connectionSearch.toLowerCase())
   );
 
-  const handleConnect = async (beneficiary: BeneficiaryResponseDto) => {
+  const updateVolunteerPoints = (newPoints: number) => {
+    localStorage.setItem(`volunteerPoints-${volunteerId}`, newPoints.toString());
+    setVolunteerPoints(newPoints);
+  };
+
+  const handleConnect = async (beneficiary: BeneficiaryResponseDto, request: BeneficiaryDto) => {
     try {
       console.log("Conectando com o beneficiário:", beneficiary);
 
@@ -111,7 +122,27 @@ export default function SupportPortal() {
       console.log("Dados enviados para o suporte:", supportData);
 
       // Enviando a requisição POST para criar a conexão
-      await axios.post('http://localhost:8080/volunteers/support', supportData);
+      const response = await axios.post('http://localhost:8080/volunteers/support', supportData);
+
+      setRequests((prevRequests) =>
+        prevRequests.filter((r) => r.id !== request.id)
+      );
+
+    
+      const newConnection: Connection = {
+        id: response.data.id, // Supondo que a resposta da requisição POST traga o ID da conexão
+        volunteer: { id: volunteerId },
+        beneficiary: { id: beneficiary.id, name: beneficiary.name },
+        dateFrom: beneficiary.dateFrom,
+        dateTo: beneficiary.dateTo,
+        supportArea: beneficiary.supportArea,
+      };
+
+      
+      const updatedPoints = volunteerPoints + 10;
+      updateVolunteerPoints(updatedPoints);
+
+      setConnections((prevConnections) => [...prevConnections, newConnection]);
 
       alert(`Conectado com sucesso ao beneficiário: ${beneficiary.name}`);
     } catch (error) {
@@ -130,11 +161,32 @@ export default function SupportPortal() {
       try {
         // Enviar requisição DELETE para o backend
         await axios.delete(`http://localhost:8080/volunteers/support/${connection.id}`);
+
+        const updatedPoints = volunteerPoints - 10;
+        updateVolunteerPoints(updatedPoints); 
         
         // Remover a conexão da lista local após exclusão bem-sucedida
         setConnections((prevConnections) =>
-          prevConnections.filter((c) => c !== connection)
+          prevConnections.filter((c) => c.id !== connection.id)
         );
+
+        const reactivatedRequest: BeneficiaryDto = {
+          id: connection.beneficiary.id, 
+          name: connection.beneficiary.name,
+          supportArea: connection.supportArea,
+          dateFrom: connection.dateFrom,
+          dateTo: connection.dateTo,
+          city: "", 
+          address: "", 
+          gender: "", 
+          age: 0, 
+          cpf: "", 
+          phone: "", 
+          email: "", 
+          cep: "", 
+        };
+
+        setRequests((prevRequests) => [...prevRequests, reactivatedRequest]);
   
         alert(`Conexão com ${connection.beneficiary.name} excluída com sucesso.`);
       } catch (error) {
@@ -148,7 +200,16 @@ export default function SupportPortal() {
     <div className="portal">
       <h1>Portal de Solicitações</h1>
       <h3>Bem-vindo, <strong>{volunteerName || "Carregando..."}</strong>!</h3>
-      <p>Área de acesso exclusivo do voluntário.</p>
+      <p>Você tem <strong>{volunteerPoints}</strong> pontos acumulados.</p>
+      
+      <div className="congratulations">
+      {volunteerPoints >= 50 && (
+        <p className="congratulationsMessage">
+          Parabéns! Agora você pode trocar seus pontos por benefícios ou descontos com um dos nossos parceiros. 
+          <br /> <a href="/sobre" className="aboutLink">Consulte as regras e veja os nosso parceiros!!</a>
+        </p>
+      )}
+      </div> 
       <section className="portal.requests">
         <h5>Veja abaixo as solicitações disponíveis.</h5>
         <input
@@ -185,13 +246,25 @@ export default function SupportPortal() {
                   </p>
                   <button
                     className="supportBtn"
-                    onClick={() => alert(`Detalhes sobre ${request.name}`)}
+                    onClick={() => alert(`
+                      Detalhes sobre a solicitação de ${request.name}:
+                      \n\nNome: ${request.name}
+                      \nGênero: ${request.gender}
+                      \nIdade: ${request.age}
+                      \nCPF: ${request.cpf}
+                      \nTelefone: ${request.phone}
+                      \nE-mail: ${request.email}
+                      \nCEP: ${request.cep}
+                      \nEndereço: ${request.address}
+                      \nCidade: ${request.city}
+                      \nPeríodo de Suporte: ${request.dateFrom} a ${request.dateTo}
+                      \nÁrea de Suporte: ${request.supportArea}`)}
                   >
                     Saber mais detalhes.
                   </button>
                   <button
                     className="supportBtn"
-                    onClick={() => response && handleConnect(response)}
+                    onClick={() => response && handleConnect(response, request)}
                   >
                     Conectar
                   </button>
@@ -216,7 +289,9 @@ export default function SupportPortal() {
           <thead>
             <tr>
               <th>Nome do Beneficiário</th>
+              <th>Área de suporte</th>
               <th>Período do voluntariado</th>
+              <th>Detalhes</th>
               <th></th>
             </tr>
           </thead>
@@ -226,21 +301,37 @@ export default function SupportPortal() {
                 <tr key={index}>
                   <td>{connection.beneficiary.name}</td>
                   <td>
+                    {connection.supportArea}
+                  </td>
+                  <td>
                     {connection.dateFrom} a {connection.dateTo}
+                  </td>
+                  <td>
+                    <button
+                      className="supportBtn"
+                      onClick={() => alert(`
+                        Detalhes sobre a conexão com ${connection.beneficiary.name}:
+                        \n\nNome do Beneficiário: ${connection.beneficiary.name}
+                        \nPeríodo do Voluntariado: ${connection.dateFrom} a ${connection.dateTo}
+                        \nÁrea de Suporte: ${connection.supportArea}`
+                      )}
+                    >
+                      Ver detalhes
+                    </button>
                   </td>
                   <td>
                     <button
                       className="supportBtn"
                       onClick={() => handleDeleteConnection(connection)}
                     >
-                      Excluir
+                      Cancelar
                     </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={3} className="noConnections">
+                <td colSpan={4} className="noConnections">
                   Não há conexões correspondentes à busca.
                 </td>
               </tr>

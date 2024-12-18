@@ -27,6 +27,15 @@ h5 {
   margin-top: 20px;
 }
 
+.congratulations {
+  flex: 1 1 calc(25% - 20px); 
+  max-width: 600px; 
+  border-radius: 8px;
+  padding: 10px;
+  transition: transform 0.2s;
+  margin: 10px; 
+}
+
 .searchBox {
   width: 100%;
   padding: 8px;
