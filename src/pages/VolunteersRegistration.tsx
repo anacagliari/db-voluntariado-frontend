@@ -17,6 +17,7 @@ export default function VolunteersRegistration({ showModalAddVolunteer, closeMod
   async function addVolunteer() {
     try {
       await createVolunteer(volunteerDTO);
+      alert("Voluntário cadastrado com sucesso!");
     } catch (error) {
       alert(error);
     }
