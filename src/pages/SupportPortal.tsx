@@ -29,6 +29,8 @@ export default function SupportPortal() {
   const [connectionSearch, setConnectionSearch] = useState("");
   const [volunteerName, setVolunteerName] = useState<string | null>(null);
   const [volunteerPoints, setVolunteerPoints] = useState<number>(0);
+  const [isEditing, setIsEditing] = useState<boolean>(false); 
+  const [editingConnection, setEditingConnection] = useState<Connection | null>(null); 
 
   // ID fixo do voluntário, simulando que o Voluntário está logado
   const volunteerId = 1; 
@@ -155,6 +157,34 @@ export default function SupportPortal() {
     }
   };
 
+  // Função para iniciar a edição
+  const handleEditConnection = (connection: Connection) => {
+    setIsEditing(true);
+    setEditingConnection(connection);
+  };
+
+  // Função para salvar a edição localmente
+  const handleSaveEditedConnection = () => {
+    if (editingConnection) {
+      // Atualiza as conexões com os novos dados
+      setConnections((prevConnections) =>
+        prevConnections.map((conn) =>
+          conn.id === editingConnection.id ? editingConnection : conn
+        )
+      );
+
+      // Fecha o modal de edição
+      setIsEditing(false);
+      setEditingConnection(null);
+    }
+  };
+
+  // Função para cancelar a edição
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditingConnection(null);
+  };
+
 
   const handleDeleteConnection = async (connection: Connection) => {
     if (window.confirm(`Tem certeza que deseja excluir a conexão com ${connection.beneficiary.name}?`)) {
@@ -276,6 +306,32 @@ export default function SupportPortal() {
           )}
         </div>
       </section>
+      <div className="portal">
+    {/* Se está editando, exibe o formulário de edição */}
+    {isEditing && editingConnection && (
+      <div className="editModal">
+        <h3>Editar Conexão</h3>
+        <div>
+          <label>Período de Suporte:</label>
+          <input
+            type="text"
+            value={editingConnection.dateFrom}
+            onChange={(e) =>
+              setEditingConnection({ ...editingConnection, dateFrom: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            value={editingConnection.dateTo}
+            onChange={(e) =>
+              setEditingConnection({ ...editingConnection, dateTo: e.target.value })
+            }
+          />
+        </div>
+        <button onClick={handleSaveEditedConnection}>Salvar</button>
+        <button onClick={handleCancelEdit}>Cancelar</button>
+      </div>
+    )}
       <section className="portal">
         <h5>Minhas conexões</h5>
         <input
@@ -292,6 +348,7 @@ export default function SupportPortal() {
               <th>Área de suporte</th>
               <th>Período do voluntariado</th>
               <th>Detalhes</th>
+              <th>Editar</th>
               <th></th>
             </tr>
           </thead>
@@ -320,6 +377,14 @@ export default function SupportPortal() {
                     </button>
                   </td>
                   <td>
+                  <button
+                    className="supportBtn"
+                    onClick={() => handleEditConnection(connection)} 
+                  >
+                    Editar
+                  </button>
+                </td>
+                  <td>
                     <button
                       className="supportBtn"
                       onClick={() => handleDeleteConnection(connection)}
@@ -339,6 +404,7 @@ export default function SupportPortal() {
           </tbody>
         </table>
       </section>
+    </div>
     </div>
   );
 }
