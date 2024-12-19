@@ -24,7 +24,9 @@ export default function MyHeader() {
           </li>
         </ul>
       </nav>
-      <button className="btn btn-primary">Entrar</button>
+      <Link to="/building">
+        <button className="btn btn-primary">Entrar</button>
+      </Link>
     </header>
   );
 }
