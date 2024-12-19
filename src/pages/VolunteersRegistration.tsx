@@ -145,7 +145,7 @@ export default function VolunteersRegistration({ showModalAddVolunteer, closeMod
                 className="btn btn-secondary"
                 onClick={() => closeModal()}
               >
-                Cancelar
+                Concluir
               </button>
             </div>
           </div>
