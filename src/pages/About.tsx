@@ -12,13 +12,16 @@ export default function About() {
                 <div className="col">
                     <h2>Conectando Gerações, Transformando Vidas</h2>
                     <p>
-                    Nosso sistema web é uma plataforma dedicada a conectar voluntários a beneficiários idosos, promovendo solidariedade e criando uma rede de apoio mútuo. Aqui, os beneficiários podem se cadastrar para solicitar ajuda em diversas áreas, informando o período e o tipo de suporte necessário.
+                    Nosso sistema web foi desenvolvido para empresas que desejam incentivar a ação voluntária entre seus colaboradores, promovendo solidariedade e impacto positivo na comunidade. A plataforma conecta voluntários a beneficiários idosos, criando uma rede de apoio mútuo e fortalecendo vínculos entre gerações.
                     <br />
                     <br />
-                    Do outro lado, voluntários têm a oportunidade de se cadastrar, acessar as solicitações e se conectar com idosos para oferecer seu tempo, habilidades e cuidado. Acreditamos que cada gesto de apoio é uma oportunidade de construir laços significativos e transformar vidas.
+                    Os beneficiários podem se cadastrar para solicitar ajuda em diversas áreas, informando o período e o tipo de suporte necessário. Enquanto isso, os colaboradores das empresas têm a oportunidade de se voluntariar, acessar as solicitações e oferecer seu tempo, habilidades e cuidado.
                     <br />
                     <br />
-                    Nossa missão é criar uma comunidade solidária, onde o voluntariado é recompensado não apenas com a satisfação de ajudar, mas também com benefícios culturais e sociais que celebram o valor da generosidade.
+                    Acreditamos que cada gesto de apoio é uma oportunidade de transformar vidas e construir laços significativos. Além disso, as empresas participantes fortalecem sua cultura organizacional, promovem o engajamento interno e refletem o valor da responsabilidade social.
+                    <br />
+                    <br />
+                    Nossa missão é criar uma comunidade solidária, onde o voluntariado é recompensado não apenas com a satisfação de ajudar, mas também com benefícios culturais e sociais que celebram a generosidade e o impacto coletivo.
                     </p>
                 </div>
             </div>

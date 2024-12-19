@@ -307,13 +307,13 @@ export default function SupportPortal() {
         </div>
       </section>
       <div className="portal">
-    {/* Se está editando, exibe o formulário de edição */}
     {isEditing && editingConnection && (
       <div className="editModal">
         <h3>Editar Conexão</h3>
         <div>
           <label>Período de Suporte:</label>
           <input
+            className="searchBox"
             type="text"
             value={editingConnection.dateFrom}
             onChange={(e) =>
@@ -328,8 +328,8 @@ export default function SupportPortal() {
             }
           />
         </div>
-        <button onClick={handleSaveEditedConnection}>Salvar</button>
-        <button onClick={handleCancelEdit}>Cancelar</button>
+        <button className="supportBtn" onClick={handleSaveEditedConnection}>Salvar</button>
+        <button className="supportBtn" onClick={handleCancelEdit}>Cancelar</button>
       </div>
     )}
       <section className="portal">

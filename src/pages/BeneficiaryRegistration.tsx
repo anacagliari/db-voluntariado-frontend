@@ -17,7 +17,7 @@ export default function BeneficiaryRegistration({ showModalAddBeneficiary, close
   async function addBeneficiary() {
     try {
       await createBeneficiary(beneficiaryDto);
-      console.log("Beneficiário cadastrado com sucesso!");
+      alert("Beneficiário cadastrado com sucesso!");
     } catch (error) {
       alert(error);
     }
@@ -217,7 +217,7 @@ export default function BeneficiaryRegistration({ showModalAddBeneficiary, close
                 className="btn btn-secondary"
                 onClick={() => closeModal()}
               >
-                Cancelar
+                Concluir
               </button>
             </div>
           </div>
