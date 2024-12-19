@@ -48,10 +48,9 @@ export default function VolunteersRegistration({ showModalAddVolunteer, closeMod
                 value={volunteerDTO.gender}
                 onChange={(e) => setVolunteerDTO({ ...volunteerDTO, gender: e.target.value })}
               >
-                <option value="" disabled>Selecione seu gênero</option>
-                <option value="feminino">Feminino</option>
-                <option value="masculino">Masculino</option>
-                <option value="prefiro-nao-informar">Prefiro não informar</option>
+                <option value="" disabled>Selecione seu sexo</option>
+                <option value="FEMININO">Feminino</option>
+                <option value="MASCULINO">Masculino</option>
               </select>
             </div>
 

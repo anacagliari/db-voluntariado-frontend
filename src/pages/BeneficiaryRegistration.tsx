@@ -3,7 +3,6 @@ import styles from "../styles/Registration.module.css";
 import { BeneficiaryRegistrationProps } from "../props/BeneficiaryRegistrationProps";
 import { createBeneficiary } from "../services/BeneficiaryService";
 import { BeneficiaryDto } from "../models/BeneficiaryDto";
-import "../styles/Buttons.css";
 
 
 export default function BeneficiaryRegistration({ showModalAddBeneficiary, closeModal }: BeneficiaryRegistrationProps): JSX.Element | null {
@@ -18,6 +17,7 @@ export default function BeneficiaryRegistration({ showModalAddBeneficiary, close
   async function addBeneficiary() {
     try {
       await createBeneficiary(beneficiaryDto);
+      console.log("Beneficiário cadastrado com sucesso!");
     } catch (error) {
       alert(error);
     }
@@ -29,7 +29,7 @@ export default function BeneficiaryRegistration({ showModalAddBeneficiary, close
     >
       <div className={`${styles.modalCard} card p-4 shadow-lg rounded`}>
         <div className="card-body">
-          <div className={styles.cardTitleBeneficiary}>
+          <div className={styles.cardTitleVolunteer}>
           <h3>Cadastro de Beneficiário</h3>
           </div>
           <div className="row g-3">
@@ -92,15 +92,17 @@ export default function BeneficiaryRegistration({ showModalAddBeneficiary, close
                 className={`${styles.input} form-control`}
                 value={beneficiaryDto.gender}
                 onChange={(e) =>
-                  setBeneficiaryDto({ ...beneficiaryDto, gender: e.target.value })
+                  setBeneficiaryDto({
+                    ...beneficiaryDto,
+                    gender: e.target.value.toUpperCase(),
+                  })
                 }
               >
                 <option value="" disabled>
                   Selecione seu sexo
                 </option>
-                <option value="feminino">Feminino</option>
-                <option value="masculino">Masculino</option>
-                <option value="prefiro-nao-informar">Prefiro não informar</option>
+                <option value="FEMININO">Feminino</option>
+                <option value="MASCULINO">Masculino</option>
               </select>
             </div>
 
@@ -182,20 +184,20 @@ export default function BeneficiaryRegistration({ showModalAddBeneficiary, close
                 onChange={(e) =>
                   setBeneficiaryDto({
                     ...beneficiaryDto,
-                    supportArea: [e.target.value],
+                    supportArea: e.target.value.toUpperCase(), 
                   })
                 }
               >
                 <option value="" disabled>
                   Selecione sua área de suporte
                 </option>
-                <option value="Aprendizado de Tecnologia">
+                <option value="APRENDIZADO_TECNOLOGIA">
                   Aprendizado de Tecnologia
                 </option>
-                <option value="Realização de Tarefas Cotidianas">
+                <option value="REALIZACAO_TAREFAS">
                   Realização de Tarefas Cotidianas
                 </option>
-                <option value="Participação em Atividades Recreativas">
+                <option value="PARTICIPACAO_ATIVIDADES">
                   Participação em Atividades Recreativas
                 </option>
               </select>
